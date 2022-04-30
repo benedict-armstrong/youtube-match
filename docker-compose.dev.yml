@@ -1,0 +1,49 @@
+services:
+  proxy:
+    image: haproxy:alpine
+    container_name: ym_proxy
+    restart: always
+    ports:
+      - '2345:80'
+    volumes:
+      - ./proxy/config/:/usr/local/etc/haproxy
+    env_file:
+      - ./proxy/proxy.env
+    links:
+      - api
+      - client
+
+  api:
+    container_name: ym_api
+    image: benarmstrong/ym/api:latest
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: always
+    links:
+      - database
+    depends_on:
+      - database
+    env_file:
+      - ./api/api.env
+    environment:
+      - RUNNING_IN_DOCKER=true
+
+  client:
+    container_name: ym_frontend
+    image: benarmstrong/ym/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+
+  database:
+    container_name: ym_database
+    image: postgres:14.2-alpine
+    restart: always
+    env_file:
+      - ./database/database.env
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
