@@ -1,23 +1,19 @@
 from fastapi import FastAPI
 import uvicorn
+from core.config.settings import settings
 from fastapi.middleware.cors import CORSMiddleware
+from api.api import api_router
 
-from get_auth import get_authenticated_service
-from test import retrieve_youtube_subscriptions
 
 
 app = FastAPI(
-    title="AE API", openapi_url=f"/openapi.json"
+    title="AE API", openapi_url=f"{settings.API_PREFIX}/openapi.json"
 )
 
 
-@app.get(f"/healthcheck", tags=["healthcheck"])
+@app.get("/healthcheck", tags=["healthcheck"])
 def healthcheck() -> str:
     return "OK"
-
-@app.get(f"/channels")
-def auth() -> str:
-    return retrieve_youtube_subscriptions()
 
 
 origins = [
@@ -32,6 +28,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(api_router, prefix=f"{settings.API_PREFIX}")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

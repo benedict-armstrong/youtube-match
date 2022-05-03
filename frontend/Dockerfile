@@ -5,11 +5,11 @@ FROM node:14-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-COPY react-app/package.json react-app/package-lock.json ./
+COPY my-app/package.json my-app/package-lock.json ./
 RUN npm i --no-optional
 
 # Copy all files from current directory to working dir in image
-COPY react-app/ .
+COPY my-app/ .
 
 # build the app
 RUN npm run build

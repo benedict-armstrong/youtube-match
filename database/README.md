@@ -3,7 +3,7 @@
 Run the following command to get SQLAlchemy Models from Database
 
 ```
-sqlacodegen --outfile test.py postgresql://postgres:postgres@localhost/ae
+sqlacodegen --outfile test.py postgresql://postgres:postgres@localhost/ym
 ```
 
 To delete all Tables and Sequences from Database run the following command
