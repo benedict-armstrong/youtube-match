@@ -1,12 +1,12 @@
 services:
   proxy:
-    image: haproxy:alpine
     container_name: ym_proxy
+    image: haproxy:alpine
     restart: always
     ports:
-      - '2345:80'
+      - 8009:8080
     volumes:
-      - ./proxy/config/:/usr/local/etc/haproxy
+      - ./proxy/config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     env_file:
       - ./proxy/proxy.env
     links:
@@ -47,5 +47,6 @@ services:
       - ./database/database.env
     volumes:
       - ./database/data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+      - ./database/create.sql:/docker-entrypoint-initdb.d/create.sql:ro
+    #ports:
+    #  - 5432:5432

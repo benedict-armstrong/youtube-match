@@ -1,6 +1,6 @@
 import re
 from typing import Any, Dict, Optional
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, status
 from requests import session
 from sqlalchemy.orm import Session as DBSession
 import api.deps as deps
@@ -13,6 +13,7 @@ import crud
 from core.config import settings
 from schemas.subscription import SubscriptionCreate
 from service.youtube import fetch_channels
+from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 
@@ -48,4 +49,4 @@ async def oauth2callback(
 
     session = crud.session.get(db=db, id=user.login_session_id)
 
-    return {"uuid": session.uuid}
+    return RedirectResponse("{}?uuid={}".format(settings.FINISHED_REDIRECT_URL, session.uuid), status_code=status.HTTP_303_SEE_OTHER )
