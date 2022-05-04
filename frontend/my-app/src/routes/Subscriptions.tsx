@@ -1,15 +1,15 @@
 import * as React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { API_URL } from "../globals";
 
 export interface ISubscriptionsProps {}
 
 export function Subscriptions(props: ISubscriptionsProps) {
   const [subs, setSubs] = React.useState<string[]>([]);
-  let [searchParams, setSearchParams] = useSearchParams();
+  let { uuid } = useParams();
   const navigate = useNavigate();
 
-  function getSubs(uuid: string | null) {
+  function getSubs(uuid: string | undefined) {
     if (!uuid) {
       return;
     }
@@ -23,28 +23,29 @@ export function Subscriptions(props: ISubscriptionsProps) {
   }
 
   React.useEffect(() => {
-    if (!searchParams.get("uuid")) {
+    if (!uuid) {
       navigate("/");
     }
-  }, [navigate, searchParams]);
+  }, [navigate, uuid]);
 
   React.useEffect(() => {
-    getSubs(searchParams.get("uuid"));
-  }, [searchParams]);
+    getSubs(uuid);
+  }, [uuid]);
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <div>
         <div className="text-center">
           <h1 className="text-lg font-semibold text-gray-800">Youtube Match</h1>
-          <p>
-            Click the sign in button to start. You will be asked to sign in
-            using Google and the get a link to share with your friends.
-          </p>
+          <p>Channels you both subscribe to:</p>
         </div>
         <div className="flex justify-center items-center">
           {subs.map((sub) => {
-            return <div key={sub}>{sub}</div>;
+            return (
+              <div className="m-2" key={sub}>
+                {sub}
+              </div>
+            );
           })}
         </div>
       </div>

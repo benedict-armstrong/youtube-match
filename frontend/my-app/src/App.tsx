@@ -14,7 +14,7 @@ function App() {
         <Route path="/success">
           <Route index element={<LoginSuccess />} />
         </Route>
-        <Route path="/subscriptions">
+        <Route path="/subscriptions/:uuid">
           <Route index element={<Subscriptions />} />
         </Route>
       </Routes>
