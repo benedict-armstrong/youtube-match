@@ -1,5 +1,10 @@
 import * as React from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { API_URL } from "../globals";
 
 export interface ISubscriptionsProps {}
@@ -39,14 +44,24 @@ export function Subscriptions(props: ISubscriptionsProps) {
           <h1 className="text-lg font-semibold text-gray-800">Youtube Match</h1>
           <p>Channels you both subscribe to:</p>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex-col justify-center items-center max-h-[60vh] overflow-scroll border-gray-200 border-b-2 pb-3 bg-scroll overflow-x-visible">
           {subs.map((sub) => {
             return (
-              <div className="m-2" key={sub}>
+              <div className="my-2" key={sub}>
                 {sub}
               </div>
             );
           })}
+        </div>
+        <div>
+          <div className="text-center m-3">
+            <Link
+              className="underline text-blue-400 hover:text-blue-600"
+              to="/"
+            >
+              Go again with someone else
+            </Link>
+          </div>
         </div>
       </div>
     </div>
