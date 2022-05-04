@@ -72,14 +72,15 @@ export function LoginSuccess(props: ILoginSuccessProps) {
           </div>
           <div className="flex justify-center items-center">
             <code className="block whitespace-pre overflow-x-scroll bg-gray-200 border-gray-500 px-4 py-1 rounded-md m-2">
-              {"youtube.benarmstro.ng?uuid=" + searchParams.get("uuid")}
+              {"https://youtube.benarmstro.ng?uuid=" + searchParams.get("uuid")}
             </code>
             <button
               title="Copy link"
               type="button"
               onClick={() => {
                 const text =
-                  "youtube.benarmstro.ng?uuid=" + searchParams.get("uuid");
+                  "https://youtube.benarmstro.ng?uuid=" +
+                  searchParams.get("uuid");
                 navigator.clipboard.writeText(text).then(
                   function () {
                     setCopied(true);
