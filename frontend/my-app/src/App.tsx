@@ -1,13 +1,21 @@
-import React from 'react';
-import GoogleLoginCompenent from './GoogleLogin';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./routes/Home";
+import { LoginSuccess } from "./routes/LoginSuccess";
 
-
-type Props = {}
-
-export default function App({}: Props) {
+function App() {
   return (
-    <div>
-      <GoogleLoginCompenent></GoogleLoginCompenent>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="/success">
+          <Route index element={<LoginSuccess />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
+
+export default App;

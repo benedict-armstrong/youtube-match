@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     API_SERVICE_NAME: str = "youtube"
     GOOGLE_API_VERSION: str = "v3"
     REDIRECT_URL: str = '{}{}/login/oauth2callback'.format(APP_BASE_URL, API_PREFIX)
+    
     SCOPES: Set[str] = {
         'https://www.googleapis.com/auth/userinfo.profile',
         'openid',
